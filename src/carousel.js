@@ -11,7 +11,7 @@ export default function initCarousel(carousel) {
 
   carousel.querySelector(".previous").onclick = () => {
     if (position <= 0) {
-      position = -imgSize * (list.querySelectorAll("li").length - 1);
+      position = list.querySelectorAll("li").length - 1;
     } else {
       position -= 1;
     }
