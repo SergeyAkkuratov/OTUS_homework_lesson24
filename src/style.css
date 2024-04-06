@@ -1,3 +1,89 @@
-@media (min-width: 400px) {
-  /* Стили для мобилного устройства */
+:root {
+  --img-size: 300px;
+}
+
+.carousel {
+  position: relative;
+  width: var(--img-size);
+  padding: 10px 40px;
+  border: 1px solid #ccc;
+}
+
+.carousel img {
+  width: var(--img-size);
+  height: var(--img-size);
+  display: block;
+}
+
+.arrow {
+  height: 100%;
+  position: absolute;
+  top: 0;
+  font-size: 24px;
+  display: block;
+}
+
+.arrow:focus {
+  outline: none;
+}
+
+.arrow:hover {
+  background: #ccc;
+  cursor: pointer;
+}
+
+.previous {
+  left: 0px;
+}
+
+.next {
+  right: 0px;
+}
+
+.carousel-container {
+  width: var(--img-size);
+  overflow: hidden;
+}
+
+.carousel-container ul {
+  height: var(--img-size);
+  width: 9999px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  transition: margin-left 250ms;
+  font-size: 0;
+}
+
+.carousel-container li {
+  display: inline-block;
+}
+
+.context-menu-open {
+  display: none;
+  position: fixed;
+  z-index: 99999;
+  top: 0;
+  left: 0;
+  box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.54);
+  background-color: white;
+  border-radius: 4px;
+  padding: 4px;
+}
+.context-menu-open ul {
+  padding: 0;
+  margin: 0;
+}
+.context-menu-open ul li {
+  cursor: pointer;
+  list-style: none;
+  padding: 10px 12px;
+  margin: 0;
+  border-bottom: 1px solid #bfe2ff;
+}
+.context-menu-open ul li:last-child {
+  border-bottom: 1px solid transparent;
+}
+.context-menu-open ul li:hover {
+  background-color: #bfe2ff;
 }
