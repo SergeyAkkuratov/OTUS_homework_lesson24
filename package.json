@@ -1,7 +1,7 @@
 {
-  "name": "otus_homework_lesson13",
+  "name": "otus_homework_lesson24",
   "version": "1.0.0",
-  "description": "Выполнение домашнего задания для лекции \"Инструменты разработки. Тестирование верстки, использование медиазапросов\"",
+  "description": "Выполнение домашнего задания для лекции \"Создание подключаемых плагинов\"",
   "main": "index.js",
   "scripts": {
     "test": "jest --passWithNoTests --coverage",
@@ -12,14 +12,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/SergeyAkkuratov/OTUS_homework_lesson13.git"
+    "url": "git+https://github.com/SergeyAkkuratov/OTUS_homework_lesson24.git"
   },
   "author": "Sergey Akkuratov",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/SergeyAkkuratov/OTUS_homework_lesson13/issues"
+    "url": "https://github.com/SergeyAkkuratov/OTUS_homework_lesson24/issues"
   },
-  "homepage": "https://github.com/SergeyAkkuratov/OTUS_homework_lesson13#readme",
+  "homepage": "https://github.com/SergeyAkkuratov/OTUS_homework_lesson24#readme",
   "devDependencies": {
     "@babel/preset-env": "^7.24.0",
     "css-loader": "^6.10.0",
