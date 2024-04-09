@@ -6,76 +6,77 @@ export default function initCarousel(carousel) {
     10,
   );
   const list = carousel.querySelector("ul");
+  let listLength = list.children.length - 1;
 
   let position = 0;
 
-  carousel.querySelector(".previous").onclick = () => {
-    if (position <= 0) {
-      position = list.querySelectorAll("li").length - 1;
-    } else {
-      position -= 1;
-    }
+  function updateMargin() {
     list.style.marginLeft = `${-position * imgSize}px`;
-  };
+  }
 
-  carousel.querySelector(".next").onclick = () => {
-    if (position >= list.querySelectorAll("li").length - 1) {
-      position = 0;
-    } else {
-      position += 1;
-    }
-    list.style.marginLeft = `${-position * imgSize}px`;
-  };
-
-  carousel.addEventListener("contextmenu", (e) => {
-    e.preventDefault();
-    contextMenuOpen.style.left = `${e.clientX}px`;
-    contextMenuOpen.style.top = `${e.clientY}px`;
-    contextMenuOpen.style.display = "block";
+  carousel.querySelector(".previous").addEventListener("click", () => {
+    position = position <= 0 ? listLength : position - 1;
+    updateMargin();
   });
 
-  contextMenuOpen.querySelector(".add-image").addEventListener("click", () => {
-    const input = document.querySelector(".inputFile");
-
-    input.onchange = (e) => {
-      const file = e.target.files[0];
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-
-      reader.onload = (readerEvent) => {
-        const li = document.createElement("li");
-        li.classList.add("carousel-item");
-        const img = document.createElement("img");
-        img.src = readerEvent.target.result;
-        li.appendChild(img);
-
-        list
-          .querySelectorAll("li")
-          [position].insertAdjacentElement("afterend", li);
-        position += 1;
-        list.style.marginLeft = `${-position * imgSize}px`;
-      };
-    };
-
-    input.click();
+  carousel.querySelector(".next").addEventListener("click", () => {
+    position = position >= listLength ? 0 : position + 1;
+    updateMargin();
   });
 
-  contextMenuOpen
-    .querySelector(".remove-image")
-    .addEventListener("click", () => {
-      if (list.querySelectorAll("li").length === 0) {
-        // eslint-disable-next-line no-alert
-        alert("Нет элементов, которые можно было бы удалить");
-      } else {
-        list.removeChild(list.querySelectorAll("li")[position]);
-        if (position > list.querySelectorAll("li").length - 1) {
-          position = 0;
-          list.style.marginLeft = `${-position * imgSize}px`;
-        }
-      }
+  if (carousel.classList.contains("context-menu-change")) {
+    carousel.addEventListener("contextmenu", (e) => {
+      e.preventDefault();
+      contextMenuOpen.style.left = `${e.clientX}px`;
+      contextMenuOpen.style.top = `${e.clientY}px`;
+      contextMenuOpen.style.display = "block";
     });
 
-  window.addEventListener("click", () => {
-    contextMenuOpen.style.display = "none";
-  });
+    contextMenuOpen
+      .querySelector(".add-image")
+      .addEventListener("click", () => {
+        const input = document.createElement("input");
+        input.type = "file";
+        input.accept = "image/*";
+
+        input.onchange = (e) => {
+          const file = e.target.files[0];
+          const reader = new FileReader();
+          reader.readAsDataURL(file);
+
+          reader.onload = (readerEvent) => {
+            const li = document.createElement("li");
+            li.classList.add("carousel-item");
+            li.innerHTML = `<img src="${readerEvent.target.result}" alt="${file.name}">`;
+
+            list
+              .querySelectorAll("li")
+              [position].insertAdjacentElement("afterend", li);
+            position += 1;
+            listLength = list.children.length - 1;
+            updateMargin();
+          };
+        };
+
+        input.click();
+      });
+
+    contextMenuOpen
+      .querySelector(".remove-image")
+      .addEventListener("click", () => {
+        if (listLength < 0) {
+          // eslint-disable-next-line no-alert
+          alert("Нет элементов, которые можно было бы удалить");
+        } else {
+          list.removeChild(list.children[position]);
+          listLength = list.children.length - 1;
+          position = Math.min(position, listLength);
+          updateMargin();
+        }
+      });
+
+    window.addEventListener("click", () => {
+      contextMenuOpen.style.display = "none";
+    });
+  }
 }
